@@ -31,4 +31,4 @@ app.get('/CreateScene', function(req, res) {
   res.sendFile(dir + 'seinfeld_final.gif');
 })
 
-app.listen(3001);
+app.listen(process.env.PORT || 3001);
