@@ -1,0 +1,22 @@
+{
+  "name": "seinfeldapp",
+  "version": "1.0.0",
+  "description": "Seinfeld Scene Creator",
+  "main": "App.js",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "gm-base64": "^1.1.1",
+    "gm": "^1.23.0",
+    "node-gyp": "^3.6.2",
+    "request": "^2.83.0",
+    "rebuild": "^0.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Josh Hogg",
+  "license": "ISC"
+}
