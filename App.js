@@ -27,8 +27,4 @@ app.post('/CreateScene', function(req, res) {
   Engine.runCombiner(imagesURLs, textArr, (result) => res.send(result));
 })
 
-app.get('/CreateScene', function(req, res) {
-  res.sendFile(dir + 'seinfeld_final.gif');
-})
-
 app.listen(process.env.PORT || 3001);
