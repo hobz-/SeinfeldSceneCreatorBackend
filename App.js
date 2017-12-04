@@ -36,7 +36,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-var gifQueue = new Queue('gif combiner');
+var gifQueue = new Queue('gif combiner', redis://h:ec2-34-239-85-93.compute-1.amazonaws.com:26409);
 
 gifQueue.process(function(job, done) {
   console.log("queueing");
