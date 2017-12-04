@@ -150,7 +150,7 @@ function createGif(images, index, outGif, smallestHeight, largestWidth, cb) {
         .catch(function(error) {
           console.log('\n*********\nFAILED IN POSTING TO IMGUR' + '\n*********\n');
           console.log(error);
-          cb("http://localhost:3001/public/images/" + outGif)
+          cb("http://seinfeld-gif-api.herokuapp.com/public/images/" + outGif)
         });
 
         if (images.length > 1) {
