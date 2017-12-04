@@ -79,7 +79,7 @@ function resizeImage(image, smallestHeight, largestWidth) {
         .compose("Copy")
         .extent(largestWidth, smallestHeight)
         .write(dir + image, function (err) {
-          if (!err) console.log('\n*********\ndone resizing' + image + '\n*********\n');
+          if (!err) console.log('\n*********\ndone resizing ' + image + '\n*********\n');
           else console.dir("resize error");
           resolve();
         })
@@ -145,20 +145,22 @@ function createGif(images, index, outGif, smallestHeight, largestWidth, cb) {
         axios.post('https://api.imgur.com/3/image/', { 'image': base64 }, { headers: {'Content-Type': 'application/json', 'Authorization': 'Client-ID 4bb49fd693ae7e5' }} )
         .then(function(response) {
           console.log('\n*********\nSUCCESSFULLY POSTED TO IMGUR' + '\n*********\n');
-          cb(true, response.data.data.link);
+          cb(response.data.data.link);
         })
         .catch(function(error) {
           console.log('\n*********\nFAILED IN POSTING TO IMGUR' + '\n*********\n');
           console.log(error);
-          cb(false, "http://localhost:3001/public/images/" + outGif)
+          cb("http://localhost:3001/public/images/" + outGif)
         });
 
-        for (i = 0; i < images.length; i++) {
-          fs.unlink(dir + images[i], (err) => {
-            if (err) {
-              console.log("failed to delete gif: " +err);
-            }
-          });
+        if (images.length > 1) {
+          for (i = 0; i < images.length; i++) {
+            fs.unlink(dir + images[i], (err) => {
+              if (err) {
+                console.log("failed to delete gif: " +err);
+              }
+            });
+          }
         }
       });
   }
@@ -221,9 +223,8 @@ function runCombiner(imagesArr, textArr, cb) {
         textArr,
         images.map((image) => "annotated_" + image),
         "final_" + generateImageHash(12) + ".gif",
-        function(imgurSuccess, result) {
-          cb(result);
-        });
+        (result) => cb(result)
+    )
   }).catch((err) => console.log(err));
 }
 

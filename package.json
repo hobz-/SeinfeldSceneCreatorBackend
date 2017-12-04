@@ -6,12 +6,16 @@
   "dependencies": {
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
+    "bull": "^3.3.6",
     "express": "^4.16.2",
-    "gm-base64": "^1.1.1",
     "gm": "^1.23.0",
+    "gm-base64": "^1.1.1",
+    "jquery": "^3.2.1",
     "node-gyp": "^3.6.2",
+    "rebuild": "^0.1.2",
+    "redis": "^2.8.0",
     "request": "^2.83.0",
-    "rebuild": "^0.1.2"
+    "socket.io": "^2.0.4"
   },
   "engines": {
     "node": "8.9.1"
