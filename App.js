@@ -13,6 +13,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var Queue = require('bull');
 
+//Open a socket for continuous communication with client during image processing
 io.on('connection', (client) => {
   console.log('Client connected...');
 
@@ -38,7 +39,7 @@ app.use(function(req, res, next) {
 
 //REDIS QUEUE set-up using Bull
 //Jobs come in through /CreateScene
-//Where a socket is opened up so the final result can be sent back
+//And the final result is sent back to the socket created above
 var gifQueue = new Queue('gif combiner', process.env.REDIS_URL);
 
 gifQueue.process(function(job, done) {
