@@ -36,6 +36,9 @@ app.use(function(req, res, next) {
   next();
 });
 
+//REDIS QUEUE set-up using Bull
+//Jobs come in through /CreateScene
+//Where a socket is opened up so the final result can be sent back
 var gifQueue = new Queue('gif combiner', process.env.REDIS_URL);
 
 gifQueue.process(function(job, done) {

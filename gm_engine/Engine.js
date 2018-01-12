@@ -1,3 +1,5 @@
+//Returns image size back to checkImageArrSizes
+//In order to resize all images to the same height
 function checkImageSize(image) {
   return new Promise(function( resolve, reject) {
     try {
@@ -15,6 +17,7 @@ function checkImageSize(image) {
   });
 }
 
+//Generate a hash for the local filesystem to name the gifs as it saves them
 function generateImageHash(length) {
   var charArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
                  'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -43,6 +46,8 @@ function getImageHeight(image) {
     })
 }
 
+//Loop through the provided Array of images, and find the smallestHeight
+//to feed back to resizeImage function
 async function checkImageArrSizes(images) {
 
   var smallestHeight;
@@ -67,6 +72,9 @@ async function checkImageArrSizes(images) {
   return { smallestHeight, largestWidth };
 }
 
+//Resize all images (proportionally) to have the smallestHeight
+//Sides of the images will be padded with black bars to keep the width dimensions
+//consistent a cross images (and avoid seeing through layers)
 function resizeImage(image, smallestHeight, largestWidth) {
   return new Promise(function( resolve, reject) {
       //console.log("resizing " + image);
@@ -89,6 +97,7 @@ function resizeImage(image, smallestHeight, largestWidth) {
   });
 }
 
+//Adds the provided 'caption' on the client side to the image
 function annotateImage(inName, text, outName) {
   return new Promise(function(resolve, reject) {
       //console.log("annotating " + inName);
@@ -117,6 +126,9 @@ function annotateImage(inName, text, outName) {
   });
 }
 
+//Recursively creates the gifs (pairs two gifs together at time
+//stopping when the end of the array has been reached
+//and using the provided call back to send the result back to the client)
 function createGif(images, index, outGif, smallestHeight, largestWidth, cb) {
   var baseFile = (index == 1 ? images[0] : outGif)
 
@@ -166,6 +178,7 @@ function createGif(images, index, outGif, smallestHeight, largestWidth, cb) {
   }
 }
 
+//Download gif to server disk
 function downloadGif(url) {
   return new Promise(function(resolve, reject) {
     try {
@@ -186,6 +199,14 @@ function downloadGif(url) {
   })
 }
 
+//Runs a series of functions returning promises to generate the final result
+//First the size of all images is checked to come up with the smallestHeight
+//and largestWidth. The images are then resized to the smallest height, and the
+//width is used to add black bars on either side so all images have the same
+//dimensions. once resized, the images are annotated with the captions. They
+// are still seperate files at this point. Once the promises are returned,
+//they are all combined. A callback function is passed to the createGif function
+//to return the result back to the client.
 function Main(images, textArr, imagesOut, finalGifName, cb) {
 
   checkImageArrSizes(images)
